@@ -1,0 +1,11 @@
+#!/bin/bash
+
+target=8.8.8.8
+
+timestamp=$(date --rfc-3339=seconds)
+out=$(ping -c 1 $target 2>/dev/null)
+status=$?
+ms=$(echo $out | awk '/time=/{printf $14}' | sed 's/time=//')
+echo "$timestamp,$status,$ms" >> /home/pi/monitor/log.csv
+
+
