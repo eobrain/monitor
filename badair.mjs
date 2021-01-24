@@ -3,7 +3,8 @@ import fetch from 'node-fetch'
 const THRESHOLD = 1.1
 const LABELS = ['Value1', 'Value2']
 
-const toIfttt = send =>
+const toIfttt = send => {
+  console.log(send)
   fetch(
     'https://maker.ifttt.com/trigger/badair/with/key/cwK-IOEGPSzYZdS1uoEE3P',
     {
@@ -16,13 +17,12 @@ const toIfttt = send =>
     .catch((error) => {
       console.error('Error sending event to IFTTT:', error)
     })
+}
 
 // See API docs https://docs.google.com/document/d/15ijz94dXJ-YAZLi9iZ_RaBwrZ4KtYeCy08goGBwnbCU/edit
 fetch('https://www.purpleair.com/json?key=ZDD0I4ZP3J9QVILG&show=91893')
   .then(response => response.json())
   .then(({ results }) => {
-    const send = {}
-    let messageCount = 0
     const n = results.length
     for (let i = 0; i < n; ++i) {
       const { Stats } = results[i]
@@ -34,36 +34,30 @@ fetch('https://www.purpleair.com/json?key=ZDD0I4ZP3J9QVILG&show=91893')
       const day = v / v5
       const week = v / v6
       if (tenMinutes > THRESHOLD) {
-        ++messageCount
-        send[LABELS[i]] = `PM2.5 air quality is ${tenMinutes} times worse than the ten minute average\n`
+        toIfttt({ Value1: 'tenMinutes', Value2: tenMinutes })
+        return
       }
       if (halfHour > THRESHOLD) {
-        ++messageCount
-        send[LABELS[i]] = `PM2.5 air quality is ${halfHour} times worse than the half-hour average\n`
+        toIfttt({ Value1: 'halfHour', Value2: halfHour })
+        return
       }
       if (hour > THRESHOLD) {
-        ++messageCount
-        send[LABELS[i]] = `PM2.5 air quality is ${hour} times worse than hourly average\n`
+        toIfttt({ Value1: 'hour', Value2: hour })
+        return
       }
       if (sixHours > THRESHOLD) {
-        ++messageCount
-        send[LABELS[i]] = `PM2.5 air quality is ${sixHours} times worse than the six-hour average\n`
+        toIfttt({ Value1: 'sixHours', Value2: sixHours })
+        return
       }
       if (day > THRESHOLD) {
-        ++messageCount
-        send[LABELS[i]] = `PM2.5 air quality is ${day} times worse than the daily average\n`
+        toIfttt({ Value1: 'day', Value2: day })
+        return
       }
       if (week > THRESHOLD) {
-        ++messageCount
-        send[LABELS[i]] = `PM2.5 air quality is ${week} times worse than the weekly average\n`
+        toIfttt({ Value1: 'week', Value2: week })
+        return
       }
     }
-    if (!messageCount) {
-      return
-    }
-    console.log(send)
-
-    toIfttt(send)
   })
   .catch((error) => {
     console.error('Error getting data from Purple Air:', error)
