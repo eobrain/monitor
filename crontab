@@ -1,2 +1,5 @@
+# Check Internet connectivity every minute
 * * * * * /home/pi/monitor/internet
 
+# Check air quality every five minutes
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /usr/bin/node /home/pi/monitor/badair.js

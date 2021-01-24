@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+const fetch = require('node-fetch')
 
 const THRESHOLD = 1.1
 const WEBHOOK = 'https://maker.ifttt.com/trigger/badair/with/key/d4Ed7V-YaSdmcRp_u0Rqhv'
