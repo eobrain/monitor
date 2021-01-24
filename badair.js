@@ -1,9 +1,8 @@
 const fetch = require('node-fetch')
 
-const THRESHOLD = 1.1
+const THRESHOLD = 2.0
 const WEBHOOK = 'https://maker.ifttt.com/trigger/badair/with/key/d4Ed7V-YaSdmcRp_u0Rqhv'
 
-// const toIfttt = ({ value1, value2 }) => {
 const toIfttt = send => {
   console.log(send)
   // const url = `${WEBHOOK}?value1=${value1}&value2=${value2}`
