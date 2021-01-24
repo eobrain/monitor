@@ -1,12 +1,13 @@
 import fetch from 'node-fetch'
 
 const THRESHOLD = 1.1
-const LABELS = ['Value1', 'Value2']
+const WEBHOOK = 'https://maker.ifttt.com/trigger/badair/with/key/d4Ed7V-YaSdmcRp_u0Rqhv'
 
+// const toIfttt = ({ value1, value2 }) => {
 const toIfttt = send => {
   console.log(send)
-  fetch(
-    'https://maker.ifttt.com/trigger/badair/with/key/cwK-IOEGPSzYZdS1uoEE3P',
+  // const url = `${WEBHOOK}?value1=${value1}&value2=${value2}`
+  fetch(WEBHOOK,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -34,27 +35,27 @@ fetch('https://www.purpleair.com/json?key=ZDD0I4ZP3J9QVILG&show=91893')
       const day = v / v5
       const week = v / v6
       if (tenMinutes > THRESHOLD) {
-        toIfttt({ Value1: 'tenMinutes', Value2: tenMinutes })
+        toIfttt({ value1: 'tenMinutes', value2: tenMinutes })
         return
       }
       if (halfHour > THRESHOLD) {
-        toIfttt({ Value1: 'halfHour', Value2: halfHour })
+        toIfttt({ value1: 'halfHour', value2: halfHour })
         return
       }
       if (hour > THRESHOLD) {
-        toIfttt({ Value1: 'hour', Value2: hour })
+        toIfttt({ value1: 'hour', value2: hour })
         return
       }
       if (sixHours > THRESHOLD) {
-        toIfttt({ Value1: 'sixHours', Value2: sixHours })
+        toIfttt({ value1: 'sixHours', value2: sixHours })
         return
       }
       if (day > THRESHOLD) {
-        toIfttt({ Value1: 'day', Value2: day })
+        toIfttt({ value1: 'day', value2: day })
         return
       }
       if (week > THRESHOLD) {
-        toIfttt({ Value1: 'week', Value2: week })
+        toIfttt({ value1: 'week', value2: week })
         return
       }
     }
