@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Test whether Internet is up by pinging Google's DNS server.
+
 target=8.8.8.8
 
 timestamp=$(date --rfc-3339=seconds)
